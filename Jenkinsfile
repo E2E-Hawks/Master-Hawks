@@ -14,7 +14,7 @@ pipeline {
 
       }
       steps {
-        sleep 5
+        rafScript([actionBranch: 'SAS_15.1FP0', autoUpdate: true, envFile: true, envFilePath: '%OurHomeDir%\\Parameters\\KMS_271.params', killProcesses: true, linkName: 'RAF Report', rafLocation: "${SlaveRAFHome}", rafParameters: [[name: 'InstallationFolder', value: '${Folder}'], [name: 'JreVersion', value: '${JreVersion}'], [name: 'TomCatVersion', value: '${TomCatVersion}']], rdpDisconnect: true, removeFolders: false, script: 'Wait 5 sec.script', scriptBranch: 'SAS_15.1FP0'])
       }
     }
     stage('Upgrade') {
@@ -25,7 +25,7 @@ pipeline {
 
       }
       steps {
-        sleep 5
+        rafScript([actionBranch: 'SAS_15.1FP0', autoUpdate: true, envFile: true, envFilePath: '%OurHomeDir%\\Parameters\\KMS_271.params', killProcesses: true, linkName: 'RAF Report', rafLocation: "${SlaveRAFHome}", rafParameters: [[name: 'InstallationFolder', value: '${Folder}'], [name: 'JreVersion', value: '${JreVersion}'], [name: 'TomCatVersion', value: '${TomCatVersion}']], rdpDisconnect: true, removeFolders: false, script: 'Wait 5 sec.script', scriptBranch: 'SAS_15.1FP0'])
       }
     }
     stage('Snapshot after upgrade') {
@@ -36,7 +36,7 @@ pipeline {
 
       }
       steps {
-        sleep 5
+        rafScript([actionBranch: 'SAS_15.1FP0', autoUpdate: true, envFile: true, envFilePath: '%OurHomeDir%\\Parameters\\KMS_271.params', killProcesses: true, linkName: 'RAF Report', rafLocation: "${SlaveRAFHome}", rafParameters: [[name: 'InstallationFolder', value: '${Folder}'], [name: 'JreVersion', value: '${JreVersion}'], [name: 'TomCatVersion', value: '${TomCatVersion}']], rdpDisconnect: true, removeFolders: false, script: 'Wait 5 sec.script', scriptBranch: 'SAS_15.1FP0'])
       }
     }
   }
