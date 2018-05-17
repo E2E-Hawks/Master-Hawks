@@ -1,37 +1,31 @@
 pipeline {
-  agent 
-  {
-    node 
-    {
+  agent {
+    node {
       label 'ThirdParty_KMS'
     }
 
   }
-  parameters
-  {
-      string(name: 'InstallationFolder', defaultValue: 'JRE7_181_Tomcat7.0.86-15.181.86.32', description: "Enter kit folder location \\10.161.124.3\\Team Folders\\Sustaining E2E (Hawks)\\3rd PARTY\\In Testing\\KMS kits\\KMS 3.2.1\\JRE7_181_Tomcat7.0.86-15.181.86.32")
-      string(name: 'JreVersion', defaultValue: "1.7.0_181", description: "jave version 1.7.0_X")
-      string(name: 'TomCatVersion', defaultValue: "4.0.48", description: "TomCat version")
-  }
   stages {
-    stage('Validation before upgrade')
-     {
+    stage('Validation before upgrade') {
       steps {
-        rafScript([actionBranch: 'SAS_15.1FP0', autoUpdate: true, envFile: true, envFilePath: '%OurHomeDir%\\Parameters\\KMS_321.params', killProcesses: true, linkName: 'RAF Report', rafLocation: "${SlaveRAFHome}", rafParameters: [[name: 'InstallationFolder', value: "${params.InstallationFolder}"], [name: 'JreVersion', value: "${params.JreVersion}"], [name: 'TomCatVersion', value: "${params.TomCatVersion}"]], rdpDisconnect: true, removeFolders: false, script: 'KMS Validation.script', scriptBranch: 'SAS_15.1FP0'])
+        sleep 5
       }
     }
-    
     stage('Upgrade') {
-      
       steps {
-        rafScript([actionBranch: 'SAS_15.1FP0', autoUpdate: true, envFile: true, envFilePath: '%OurHomeDir%\\Parameters\\KMS_321.params', killProcesses: false, linkName: 'RAF Report', rafLocation: "${SlaveRAFHome}", rafParameters: [[name: 'InstallationFolder', value: "${params.InstallationFolder}"], [name: 'JreVersion', value: "${params.JreVersion}"], [name: 'TomCatVersion', value: "${params.TomCatVersion}"]], rdpDisconnect: true, removeFolders: false, script: 'Upgrade.script', scriptBranch: 'SAS_15.1FP0'])
+        sleep 5
+        sleep 5
       }
     }
-    stage('Snapshot after upgrade') {
-    
+    stage('Take snapshot') {
       steps {
-        rafScript([actionBranch: 'SAS_15.1FP0', autoUpdate: true, envFile: true, envFilePath: '%OurHomeDir%\\Parameters\\KMS_321.params', killProcesses: false, linkName: 'RAF Report', rafLocation: "${SlaveRAFHome}", rafParameters: [[name: 'InstallationFolder', value: "${params.InstallationFolder}"], [name: 'JreVersion', value: "${params.JreVersion}"], [name: 'TomCatVersion', value: "${params.TomCatVersion}"]], rdpDisconnect: true, removeFolders: false, script: 'Wait 5 sec.script', scriptBranch: 'SAS_15.1FP0'])
+        sleep 5
       }
     }
+  }
+  parameters {
+    string(name: 'InstallationFolder', defaultValue: 'JRE7_181_Tomcat7.0.86-15.181.86.32', description: 'Enter kit folder location \\10.161.124.3\\Team Folders\\Sustaining E2E (Hawks)\\3rd PARTY\\In Testing\\KMS kits\\KMS 3.2.1\\JRE7_181_Tomcat7.0.86-15.181.86.32')
+    string(name: 'JreVersion', defaultValue: '1.7.0_181', description: 'jave version 1.7.0_X')
+    string(name: 'TomCatVersion', defaultValue: '4.0.48', description: 'TomCat version')
   }
 }
